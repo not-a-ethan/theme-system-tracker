@@ -9,4 +9,4 @@ export default function Home() {
       <p>THIS PROJECT IS <b>NOT</b> AFFILATED NOR ENDORSED BY Cortex Brand</p>
     </section>
   );
-}
+};
