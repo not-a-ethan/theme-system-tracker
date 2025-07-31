@@ -15,3 +15,7 @@
 * {
     text-align: center;
 }
+
+[aria-label="Select All"] {
+    visibility: hidden;
+}
