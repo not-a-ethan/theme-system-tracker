@@ -1,0 +1,11 @@
+.actionsColumn {
+    width: 10%;
+}
+
+.iconsDiv {
+    display: flex;
+    position: relative;
+
+    width: fit-content;
+    margin: 0 auto;
+}

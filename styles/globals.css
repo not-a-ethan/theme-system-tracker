@@ -19,3 +19,8 @@
 [aria-label="Select All"] {
     visibility: hidden;
 }
+
+body {
+    width: 90vw;
+    margin: 0 auto;
+}
