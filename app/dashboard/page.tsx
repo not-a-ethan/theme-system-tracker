@@ -67,13 +67,15 @@ export default function DashBoard() {
                     </AccordionItem>
 
                     <AccordionItem key="2" aria-label="Journal Entry" title="Journal Entry">
-                        <Form>
+                        <Form className={`${styles.newEntry}`}>
                             <h2>Theme Journal Entry</h2>
 
-                            <DatePicker label="Jornal Date" isRequired defaultValue={now} />
+                            <div className={`${styles.metaDataItems}`}>
+                                <DatePicker label="Jornal Date" isRequired defaultValue={now} />
 
-                            <Input type="text" label="Meta-data (ex: location)" />
-
+                                <Input type="text" label="Meta-data (ex: location)" className={`${styles.metaDataInput}`} />
+                            </div>
+                            
                             <Textarea isRequired label="Field 1" minRows={3} />
                             <Textarea isRequired label="Field 2" minRows={3} />
 

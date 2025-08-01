@@ -1,4 +1,18 @@
 .habitList {
-    width: 90vw;
+    width: 90%;
     margin: 0 auto;
+}
+
+.newEntry {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.metaDataItems {
+    display: flex;
+    gap: 5%;
+}
+
+.metaDataInput {
+    min-width: 500px;
 }
