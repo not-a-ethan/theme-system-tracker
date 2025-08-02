@@ -61,14 +61,14 @@ export default function manageTheme() {
             <Table selectionMode="single" color="success">
                 <TableHeader>
                     <TableColumn>Name</TableColumn>
-                    <TableColumn>Last modified</TableColumn>
+                    <TableColumn>Description</TableColumn>
                     <TableColumn className={`${styles.actionsColumn}`}>Actions</TableColumn>
                 </TableHeader>
 
                 <TableBody>
                     <TableRow key="1">
                         <TableCell>Year of X</TableCell>
-                        <TableCell>Jan 1 1970</TableCell>
+                        <TableCell>Sit minim ipsum culpa labore ullamco ad eu quis Lorem. Occaecat minim eiusmod aute fugiat nulla ea anim excepteur mollit. </TableCell>
                         <TableCell>
                             <div className={styles.iconsDiv}>
                                 <Button onPress={onOpen} onPressStart={editOpenClick}>
