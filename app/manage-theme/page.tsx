@@ -6,16 +6,16 @@ import { useRouter } from "next/navigation";
 
 import { useSession } from "next-auth/react";
 
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@heroui/table";
-import { Tooltip } from "@heroui/tooltip";
 import { Modal, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
 
-import { EditModal } from "./editModal";
-import { DeleteModal } from "./deleteModal";
+import { Themes } from "./components/themes";
+import { EditModal } from "./components/editModal";
+import { DeleteModal } from "./components/deleteModal";
+import { NewThemeModal } from "./components/newThemeModal";
 
-import { EditIcon } from "./icons";
-import { DeleteIcon } from "./icons";
+import { EditIcon } from "./components/icons";
+import { DeleteIcon } from "./components/icons";
 
 import styles from "../../styles/manageTheme.module.css"
 
@@ -28,8 +28,9 @@ export default function manageTheme() {
     Need to add logic when edit/delete button is pressed, the themeID gets updated
     */
    const [edit, setEdit] = useState(true);
+   const [newTheme, setNewTheme] = useState(false);
 
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     if (status === "loading") {
         return (
@@ -44,12 +45,12 @@ export default function manageTheme() {
         );
     };
 
-    function editOpenClick() {
-        setEdit(true);
+    function newThemeFunc() {
+        setNewTheme(true);
     }
 
-    function deleteOpenClick() {
-        setEdit(false);
+    function notNewTheme() {
+        setNewTheme(false);
     }
 
     return (
@@ -58,42 +59,19 @@ export default function manageTheme() {
             
             <p>On this page you can choose what is your current themes and modify all your themes</p>
 
-            <Table selectionMode="single" color="success">
-                <TableHeader>
-                    <TableColumn>Name</TableColumn>
-                    <TableColumn>Description</TableColumn>
-                    <TableColumn className={`${styles.actionsColumn}`}>Actions</TableColumn>
-                </TableHeader>
+            <br />
 
-                <TableBody>
-                    <TableRow key="1">
-                        <TableCell>Year of X</TableCell>
-                        <TableCell>Sit minim ipsum culpa labore ullamco ad eu quis Lorem. Occaecat minim eiusmod aute fugiat nulla ea anim excepteur mollit. </TableCell>
-                        <TableCell>
-                            <div className={styles.iconsDiv}>
-                                <Button onPress={onOpen} onPressStart={editOpenClick}>
-                                    <Tooltip content="Edit theme">
-                                        <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                                            <EditIcon />
-                                        </span>
-                                    </Tooltip>
-                                </Button>
-                                
-                                <Button onPress={onOpen} onPressStart={deleteOpenClick}>
-                                    <Tooltip color="danger" content="Delete theme">
-                                        <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                                            <DeleteIcon />
-                                        </span>
-                                    </Tooltip>
-                                </Button>
-                            </div>
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
+            <Button onPress={onOpen} onPressStart={newThemeFunc}>
+                Add Theme
+            </Button>
+
+            <br />
+            <br />    
+
+            <Themes edit={edit} setEdit={setEdit} setNewTheme={setNewTheme} isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} />
 
             <Modal isOpen={isOpen} placement="center" onOpenChange={onOpenChange}>
-                {edit ? <EditModal themeID={themeID} /> : <DeleteModal themeID={themeID} />}
+                {newTheme ? <NewThemeModal /> : (edit ? <EditModal themeID={themeID} /> : <DeleteModal themeID={themeID} />)}
             </Modal>
         </>
     )
