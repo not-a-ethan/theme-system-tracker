@@ -64,7 +64,9 @@ export function Themes(props: any) {
     const setNewTheme = props.setNewTheme;
     const isOpen = props.isOpen;
     const onOpen = props.onOpen;
-    const onOpenChange = props.onOpenChange
+    const onOpenChange = props.onOpenChange;
+    const themeID = props.themeID;
+    const setThemeID = props.setThemeID;
 
     function notNewTheme() {
         setNewTheme(false);
@@ -78,6 +80,12 @@ export function Themes(props: any) {
     function deleteOpenClick() {
         notNewTheme();
         setEdit(false);
+    }
+
+    function themeClick(e: any) {
+        const id = e.target.id;
+
+        setThemeID(id)
     }
 
     if (data) {
@@ -100,23 +108,23 @@ export function Themes(props: any) {
                     </TableHeader>
 
                     <TableBody>
-                        {final.map((theme: String[]) => (
-                            <TableRow key={Number(theme[2])}>
-                                <TableCell>{theme[0]}</TableCell>
-                                <TableCell>{theme[1]}</TableCell>
-                                <TableCell>
-                                    <div className={styles.iconsDiv}>
-                                        <Button onPress={onOpen} onPressStart={editOpenClick}>
-                                            <Tooltip content="Edit theme">
-                                                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                        {final.map((theme: string[]) => (
+                            <TableRow key={Number(theme[2])} id={theme[2]} onClick={themeClick}>
+                                <TableCell id={theme[2]}><p id={theme[2]}>{theme[0]}</p></TableCell>
+                                <TableCell id={theme[2]}><p id={theme[2]}>{theme[1]}</p></TableCell>
+                                <TableCell id={theme[2]}>
+                                    <div className={styles.iconsDiv} id={theme[2]}>
+                                        <Button onPressEnd={onOpen} onPress={editOpenClick} onPressStart={themeClick} id={theme[2]}>
+                                            <Tooltip content="Edit theme" id={theme[2]}>
+                                                <span className="text-lg text-default-400 cursor-pointer active:opacity-50" id={theme[2]}>
                                                     <EditIcon />
                                                 </span>
                                             </Tooltip>
                                         </Button>
                                         
-                                        <Button onPress={onOpen} onPressStart={deleteOpenClick}>
-                                            <Tooltip color="danger" content="Delete theme">
-                                                <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                                        <Button onPressEnd={onOpen} onPress={deleteOpenClick} onPressStart={themeClick} id={theme[2]}>
+                                            <Tooltip color="danger" content="Delete theme" id={theme[2]}>
+                                                <span className="text-lg text-danger cursor-pointer active:opacity-50" id={theme[2]}>
                                                     <DeleteIcon />
                                                 </span>
                                             </Tooltip>

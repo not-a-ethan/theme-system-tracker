@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt"
 
 import { sql } from "@/app/postgresql/server";
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
     const token = await getToken({ req });
 
     if (!token) {
@@ -19,8 +19,18 @@ export async function POST(req: NextRequest) {
     const githubID = Number(token.sub);
     const body = await req.json();
     
+    const id: number = Number(body["themeID"]);
     const name: string = body["name"];
     const descirption: string = body["description"];
+
+    if (!id || id <= 0) {
+        return NextResponse.json(
+            { 
+                "error": "You need a valid theme ID number"
+            },
+            { status: 400 }
+        );
+    };
 
     if (!name || name.trim() == "") {
         return NextResponse.json(
@@ -28,8 +38,8 @@ export async function POST(req: NextRequest) {
                 "error": "Themes need a name"
             },
             { status: 400 }
-        )
-    }
+        );
+    };
 
     if (!descirption || descirption.trim() == "") {
         return NextResponse.json(
@@ -37,12 +47,23 @@ export async function POST(req: NextRequest) {
                 "error": "Themes need a description"
             },
             { status: 400 }
-        )
-    }
+        );
+    };
 
-    const query = await sql`INSERT INTO themes (names, description, owner) VALUES (${name}, ${descirption}, ${githubID});`;
+    const ownerQuery = await sql`SELECT * FROM themes WHERE owner=${githubID} AND id=${id};`
+
+    if (ownerQuery.length == 0) {
+        return NextResponse.json(
+            {
+                "error": "You cant edit somebody elses project"
+            },
+            { status: 403 }
+        );
+    };
+
+    const query = await sql`UPDATE themes SET names=${name}, description=${descirption} WHERE id=${id};`;
 
     return NextResponse.json(
         { status: 200 }
-    )
+    );
 }
