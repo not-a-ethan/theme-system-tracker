@@ -4,6 +4,15 @@ import { Button } from "@heroui/button";
 export function DeleteModal(props: any) {
     const themeID = props.themeID;
 
+    function deleteClick() {
+        fetch("../api/themes/delete", {
+            method: "DELETE",
+            body: JSON.stringify({
+                "themeID": themeID
+            })
+        })
+    }
+
     return (
         <>
             <ModalContent>
@@ -12,7 +21,7 @@ export function DeleteModal(props: any) {
                 </ModalHeader>
 
                 <ModalBody>
-                    <Button color="danger">
+                    <Button color="danger" onPress={deleteClick}>
                     Are you sure you want to delete<br />this theme permentally (a very very long time)?
                     </Button>
                 </ModalBody>
