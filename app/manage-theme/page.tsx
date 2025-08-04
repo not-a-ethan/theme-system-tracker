@@ -49,10 +49,6 @@ export default function manageTheme() {
         setNewTheme(true);
     }
 
-    function notNewTheme() {
-        setNewTheme(false);
-    }
-
     return (
         <>
             <h1>Manage your themes</h1>

@@ -5,8 +5,15 @@ import { addToast } from "@heroui/toast";
 
 export function NewThemeModal() {
     function createTheme() {
-        fetch("../api/themes", {
-            method: "POST"
+        const name = document.getElementById("newName")?.value;
+        const description = document.getElementById("newDesc")?.value;
+
+        fetch("../api/themes/create", {
+            method: "POST",
+            body: JSON.stringify({
+                "name": name,
+                "description": description
+            })
         })
     }
 
@@ -22,12 +29,14 @@ export function NewThemeModal() {
                         label="Name"
                         placeholder="Enter the name of your new theme"
                         variant="bordered"
+                        id="newName"
                     />
 
                     <Input
                         label="Description"
                         placeholder="Enter the description of your new theme"
                         variant="bordered"
+                        id="newDesc"
                     />
                 </ModalBody>
 
