@@ -5,7 +5,7 @@ export function DeleteModal(props: any) {
     const themeID = props.themeID;
 
     function deleteClick() {
-        fetch("../api/themes/delete", {
+        fetch("../api/themes", {
             method: "DELETE",
             body: JSON.stringify({
                 "themeID": themeID

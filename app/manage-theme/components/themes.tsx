@@ -15,7 +15,7 @@ import styles from "../../../styles/manageTheme.module.css";
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export function Themes(props: any) {
-    const { data, error } = useSWR('../api/themes/get', fetcher)
+    const { data, error } = useSWR('../api/themes', fetcher)
     
     if (!data) {
         return (    

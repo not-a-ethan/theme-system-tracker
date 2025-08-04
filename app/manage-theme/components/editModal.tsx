@@ -9,7 +9,7 @@ export function EditModal(props: any) {
         const newName = document.getElementById("editName")?.value;
         const newDescription = document.getElementById("editDescription")?.value;
 
-        fetch("../api/themes/edit", {
+        fetch("../api/themes", {
             method: "PUT",
             body: JSON.stringify({
                 "themeID": themeID,

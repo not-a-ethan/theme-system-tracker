@@ -8,7 +8,7 @@ export function NewThemeModal() {
         const name = document.getElementById("newName")?.value;
         const description = document.getElementById("newDesc")?.value;
 
-        fetch("../api/themes/create", {
+        fetch("../api/themes", {
             method: "POST",
             body: JSON.stringify({
                 "name": name,
