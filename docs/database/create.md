@@ -5,6 +5,7 @@ CREATE TABLE "users" (
   "id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "users_id_seq"),
   "githubID" integer NOT NULL UNIQUE
 );
+ALTER TABLE "users" ADD COLUMN "active_theme_id" integer
 
 CREATE TABLE "themes" (
   "id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "themes_id_seq"),

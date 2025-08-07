@@ -3,7 +3,9 @@ import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { addToast } from "@heroui/toast";
 
-export function NewThemeModal() {
+export function NewThemeModal(props: any) {
+    const setNewTheme = props.setNewTheme;
+
     function createTheme() {
         const name = document.getElementById("newName")?.value;
         const description = document.getElementById("newDesc")?.value;
@@ -15,6 +17,13 @@ export function NewThemeModal() {
                 "description": description
             })
         })
+        .catch(e => addToast({
+                title: "Failed to create new theme",
+                color: "danger"
+            })
+        );
+
+        setNewTheme(false);
     }
 
     return (

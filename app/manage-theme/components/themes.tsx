@@ -1,23 +1,29 @@
-import React, { forwardRef, useContext, useState } from "react";
-
-import useSWR from 'swr'
+import React, { useEffect, useState } from "react";
 
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@heroui/table";
 import { Tooltip } from "@heroui/tooltip";
 import { Button } from "@heroui/button";
 import { Skeleton } from "@heroui/skeleton";
+import { addToast } from "@heroui/toast";
 
 import { EditIcon } from "./icons";
 import { DeleteIcon } from "./icons";
 
+import { getAPI } from "@/helpers/getAPI";
+
 import styles from "../../../styles/manageTheme.module.css";
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json())
-
 export function Themes(props: any) {
-    const { data, error } = useSWR('../api/themes', fetcher)
-    
-    if (!data) {
+    const { themeData, themeError, themeLoading } = getAPI('../api/themes', ["themeData", "themeError", "themeLoading"]);
+
+    if (themeError) {
+        addToast({
+            title: "Failed to fetch themes",
+            color: "danger"
+        });
+    };
+
+    if (!themeData) {
         return (    
             <Table selectionMode="single" color="success">
 
@@ -55,51 +61,90 @@ export function Themes(props: any) {
                     </TableRow>
                 </TableBody>
             </Table>
-        )
-    }
+        );
+    };
     
-
-    const edit = props.edit;
     const setEdit = props.setEdit;
-    const setNewTheme = props.setNewTheme;
-    const isOpen = props.isOpen;
     const onOpen = props.onOpen;
-    const onOpenChange = props.onOpenChange;
     const themeID = props.themeID;
     const setThemeID = props.setThemeID;
 
-    function notNewTheme() {
-        setNewTheme(false);
-    }
-
     function editOpenClick() {
-        notNewTheme();
         setEdit(true);
-    }
+    };
 
     function deleteOpenClick() {
-        notNewTheme();
         setEdit(false);
-    }
+    };
 
     function themeClick(e: any) {
         const id = e.target.id;
 
-        setThemeID(id)
+        setThemeID(id);
+
+        fetch("../api/account/themes", {
+            method: "PUT",
+            body: JSON.stringify({
+                "themeID": id
+            })
+        })
+        .catch(e => addToast({
+                title: "Failed to set active theme",
+                color: "danger"
+            })
+        );
     }
 
-    if (data) {
-        const arr = data["themes"];
+    let stuffDone = false;
+    const final = [];
+    let tableRows = <></>;
 
-        const final = [];
+    if (themeData) {
+        const arr = themeData["themes"];
 
         for (let i = 0; i < arr.length; i++) {
             final.push([arr[i]["names"], arr[i]["description"], arr[i]["id"]])
         }
 
+        tableRows = <>
+            {final.map((theme: string[]) => (
+                <TableRow key={theme[2].toString()} id={theme[2]} onClick={themeClick}>
+                    <TableCell id={theme[2]}><p id={theme[2]}>{theme[0]}</p></TableCell>
+                    <TableCell id={theme[2]}><p id={theme[2]}>{theme[1]}</p></TableCell>
+                    <TableCell id={theme[2]}>
+                        <div className={styles.iconsDiv} id={theme[2]}>
+                            <Button onPressEnd={() => onOpen} onPress={() => editOpenClick} onPressStart={() => themeClick} id={theme[2]}>
+                                <Tooltip content="Edit theme" id={theme[2]}>
+                                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50" id={theme[2]}>
+                                        <EditIcon />
+                                    </span>
+                                </Tooltip>
+                            </Button>
+                            
+                            <Button onPressEnd={() => onOpen} onPress={() => deleteOpenClick} onPressStart={() => themeClick} id={theme[2]}>
+                                <Tooltip color="danger" content="Delete theme" id={theme[2]}>
+                                    <span className="text-lg text-danger cursor-pointer active:opacity-50" id={theme[2]}>
+                                        <DeleteIcon />
+                                    </span>
+                                </Tooltip>
+                            </Button>
+                        </div>
+                    </TableCell>
+                </TableRow>
+            ))}
+        </>
+
+        stuffDone = true;
+    }
+
+    function setApiThemeId() {
+        setThemeID(themeData["activeTheme"]);
+    }
+
+    if (stuffDone) {
         return (
-            <>
-                <Table selectionMode="single" color="success">
+            <span onLoad={setApiThemeId}>
+                <Table selectionMode="single" color="success" disallowEmptySelection defaultSelectedKeys={themeID.toString() ? themeID.toString() : themeData["activeTheme"]} >
 
                     <TableHeader>
                         <TableColumn>Name</TableColumn>
@@ -108,34 +153,10 @@ export function Themes(props: any) {
                     </TableHeader>
 
                     <TableBody>
-                        {final.map((theme: string[]) => (
-                            <TableRow key={Number(theme[2])} id={theme[2]} onClick={themeClick}>
-                                <TableCell id={theme[2]}><p id={theme[2]}>{theme[0]}</p></TableCell>
-                                <TableCell id={theme[2]}><p id={theme[2]}>{theme[1]}</p></TableCell>
-                                <TableCell id={theme[2]}>
-                                    <div className={styles.iconsDiv} id={theme[2]}>
-                                        <Button onPressEnd={onOpen} onPress={editOpenClick} onPressStart={themeClick} id={theme[2]}>
-                                            <Tooltip content="Edit theme" id={theme[2]}>
-                                                <span className="text-lg text-default-400 cursor-pointer active:opacity-50" id={theme[2]}>
-                                                    <EditIcon />
-                                                </span>
-                                            </Tooltip>
-                                        </Button>
-                                        
-                                        <Button onPressEnd={onOpen} onPress={deleteOpenClick} onPressStart={themeClick} id={theme[2]}>
-                                            <Tooltip color="danger" content="Delete theme" id={theme[2]}>
-                                                <span className="text-lg text-danger cursor-pointer active:opacity-50" id={theme[2]}>
-                                                    <DeleteIcon />
-                                                </span>
-                                            </Tooltip>
-                                        </Button>
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                        {tableRows}
                     </TableBody>
                 </Table>
-            </>
+            </span>
         )
     }
 }

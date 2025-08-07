@@ -58,10 +58,10 @@ export default function manageTheme() {
             <br />
             <br />    
 
-            <Themes edit={edit} setEdit={setEdit} setNewTheme={setNewTheme} isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} themeID={themeID} setThemeID={setThemeID} />
+            <Themes setEdit={setEdit} onOpen={onOpen} themeID={themeID} setThemeID={setThemeID} />
 
             <Modal isOpen={isOpen} placement="center" onOpenChange={onOpenChange}>
-                {newTheme ? <NewThemeModal /> : (edit ? <EditModal themeID={themeID} /> : <DeleteModal themeID={themeID} />)}
+                {newTheme ? <NewThemeModal setNewTheme={setNewTheme} /> : (edit ? <EditModal themeID={themeID} /> : <DeleteModal themeID={themeID} />)}
             </Modal>
         </>
     )
