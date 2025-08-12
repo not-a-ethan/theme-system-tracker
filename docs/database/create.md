@@ -13,4 +13,11 @@ CREATE TABLE "themes" (
   "description" text[],
   "owner" integer
 );
+
+CREATE TABLE "habits" (
+  "id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "habits_id_seq"),
+  "ownerGithubId" integer NOT NULL,
+  "parentTheme" integer NOT NULL,
+  "text" varchar NOT NULL
+);
 ```

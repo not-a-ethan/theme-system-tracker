@@ -6,8 +6,8 @@ import { Button } from "@heroui/button";
 import { Skeleton } from "@heroui/skeleton";
 import { addToast } from "@heroui/toast";
 
-import { EditIcon } from "./icons";
-import { DeleteIcon } from "./icons";
+import { EditIcon } from "../../../helpers/icons";
+import { DeleteIcon } from "../../../helpers/icons";
 
 import { getAPI } from "@/helpers/getAPI";
 
