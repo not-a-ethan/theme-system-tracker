@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    const query = await sql`INSERT INTO habits ("ownerGithubId", "parentTheme", "Sometrhing") VALUES (${githubID}, ${activeThemeId}, ${text});`;
+    const query = await sql`INSERT INTO habits ("ownerGithubId", "parentTheme", "text") VALUES (${githubID}, ${activeThemeId}, ${text});`;
 
     return NextResponse.json(
         { status: 200 }
