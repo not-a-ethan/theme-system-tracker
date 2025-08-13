@@ -6,13 +6,8 @@ import { useSession } from "next-auth/react";
 
 import { Accordion, AccordionItem } from "@heroui/accordion";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@heroui/table";
-import { Form } from "@heroui/form";
-import { Input } from "@heroui/input";
-import { Textarea } from "@heroui/input";
-import { Button } from "@heroui/button";
-import { DatePicker } from "@heroui/date-picker";
 
-import {getLocalTimeZone, today} from "@internationalized/date";
+import { CreateJournalEntry } from "./components/createJournal";
 
 import styles from "../../styles/dashboard.module.css"
 
@@ -32,8 +27,6 @@ export default function DashBoard() {
             <p>403 | Login in to see this page</p>
         );
     };
-
-    let now = today(getLocalTimeZone());
 
     return (
         <>
@@ -67,24 +60,7 @@ export default function DashBoard() {
                     </AccordionItem>
 
                     <AccordionItem key="2" aria-label="Journal Entry" title="Journal Entry">
-                        <Form className={`${styles.newEntry}`}>
-                            <h2>Theme Journal Entry</h2>
-
-                            <div className={`${styles.metaDataItems}`}>
-                                <DatePicker label="Jornal Date" isRequired defaultValue={now} />
-
-                                <Input type="text" label="Meta-data (ex: location)" className={`${styles.metaDataInput}`} />
-                            </div>
-                            
-                            <Textarea isRequired label="Field 1" minRows={3} />
-                            <Textarea isRequired label="Field 2" minRows={3} />
-
-                            <Textarea isRequired label="Field 3" minRows={6} />
-
-                            <Textarea isRequired label="Field 4" minRows={3} />
-
-                            <Button>Enter</Button>
-                        </Form>
+                        <CreateJournalEntry />
                     </AccordionItem>
                 </Accordion>
             </div>

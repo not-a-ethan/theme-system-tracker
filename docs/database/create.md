@@ -20,4 +20,16 @@ CREATE TABLE "habits" (
   "parentTheme" integer NOT NULL,
   "text" varchar NOT NULL
 );
+
+CREATE TABLE "journal" (
+  "id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "journal_id_seq"),
+  "themeId" integer NOT NULL,
+  "githubId" integer NOT NULL,
+  "dateTime" bigint NOT NULL,
+  "fieldOne" text NOT NULL,
+  "fieldTwo" text NOT NULL,
+  "fieldThree" text NOT NULL,
+  "filedFour" text NOT NULL,
+  "metaData" text,
+);
 ```
