@@ -19,11 +19,16 @@ export function CompleteHabit(props: any) {
 
     function changeHabit(selection: Set<string>): void {
         const newSelection: string[] = Array.from(selection);
-        const oldSelection: string[] = habitsDone;
+        let oldSelection: string[] = habitsDone;
+
+        if (oldSelection !== habitData["completed"] && oldSelection.length === 0) {
+            oldSelection = habitData["completed"];
+        }
+
         const diffrence: string[] = oldSelection.filter(x => !newSelection.includes(x)).concat(newSelection.filter(x => !oldSelection.includes(x)));
         let adding = true;
 
-        if (newSelection < oldSelection) {
+        if (newSelection.length < oldSelection.length) {
             adding = false;
         }
 
@@ -77,7 +82,7 @@ export function CompleteHabit(props: any) {
 
     if (stuffDone) {
         return (
-            <span onLoad={setCompeltedHabits}>
+            <span onLoad={() => setCompeltedHabits}>
                 <Table selectionMode="multiple" className={`${styles.habitList}`} defaultSelectedKeys={habitData["completed"].join(",").split(",")} onSelectionChange={changeHabit}>
                     <TableHeader>
                         <TableColumn>Habit</TableColumn>
