@@ -32,4 +32,10 @@ CREATE TABLE "journal" (
   "filedFour" text NOT NULL,
   "metaData" text,
 );
+
+CREATE TABLE "habitHistory" (
+  "id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "habitHistory_id_seq"),
+  "habitId" integer NOT NULL,
+  "date" date NOT NULL
+);
 ```

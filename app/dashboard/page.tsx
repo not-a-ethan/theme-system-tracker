@@ -1,15 +1,13 @@
-'use client';
+'use client'
 
 import { useRouter } from "next/navigation";
 
 import { useSession } from "next-auth/react";
 
 import { Accordion, AccordionItem } from "@heroui/accordion";
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@heroui/table";
 
 import { CreateJournalEntry } from "./components/createJournal";
-
-import styles from "../../styles/dashboard.module.css"
+import { CompleteHabit } from "./components/completeHabit";
 
 export default function DashBoard() {
     const { data: session, status } = useSession();
@@ -39,24 +37,7 @@ export default function DashBoard() {
             <div>
                 <Accordion defaultExpandedKeys={["1"]}>
                     <AccordionItem key="1" aria-label="Habits" title="Habits">
-                        <Table selectionMode="multiple" className={`${styles.habitList}`}>
-                        <TableHeader>
-                            <TableColumn>Habit</TableColumn>
-                        </TableHeader>
-                        <TableBody>
-                            <TableRow key="1">
-                                <TableCell>Accomplished Something?</TableCell>
-                            </TableRow>
-
-                            <TableRow key="2">
-                                <TableCell>Productive Day?</TableCell>
-                            </TableRow>
-
-                            <TableRow key="3">
-                                <TableCell>Exercised?</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
+                        <CompleteHabit />
                     </AccordionItem>
 
                     <AccordionItem key="2" aria-label="Journal Entry" title="Journal Entry">
