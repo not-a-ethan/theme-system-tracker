@@ -9,9 +9,15 @@ import { Accordion, AccordionItem } from "@heroui/accordion";
 import { CreateJournalEntry } from "./components/createJournal";
 import { CompleteHabit } from "./components/completeHabit";
 
+import { getAPI } from "@/helpers/getAPI";
+import { Skeleton } from "@heroui/skeleton";
+import { act } from "react";
+
 export default function DashBoard() {
     const { data: session, status } = useSession();
     const router = useRouter();
+
+    const { themeData, themeError, themeLoading } = getAPI('../api/themes', ["themeData", "themeError", "themeLoading"]);
 
     if (status === "loading") {
         return (
@@ -26,11 +32,49 @@ export default function DashBoard() {
         );
     };
 
+    if (themeData) {
+        const activeTheme = {};
+
+        for (let i = 0; i < themeData["themes"].length; i++) {
+            if (themeData["themes"][i]["id"] == themeData["activeTheme"]) {
+                activeTheme.id = themeData["themes"][i]["id"];
+                activeTheme.name = themeData["themes"][i]["names"];
+                activeTheme.description = themeData["themes"][i]["description"];
+            }
+        }
+
+        return (
+            <>
+                <h1>Dashboard <p>Current Theme: {activeTheme["name"]}</p></h1>
+
+                <p>{activeTheme["description"]}</p>
+
+                <br />
+
+                <div>
+                    <Accordion defaultExpandedKeys={["1"]}>
+                        <AccordionItem key="1" aria-label="Habits" title="Habits">
+                            <CompleteHabit />
+                        </AccordionItem>
+
+                        <AccordionItem key="2" aria-label="Journal Entry" title="Journal Entry">
+                            <CreateJournalEntry />
+                        </AccordionItem>
+                    </Accordion>
+                </div>
+            </>
+        );
+    }
+
     return (
         <>
-            <h1>Dashboard <p>Current Theme: [THIS IS THE THEME]</p></h1>
+            <h1>
+                Dashboard 
+                <br />
+                Current Theme: <Skeleton>[THIS IS THE THEME]</Skeleton>
+            </h1>
 
-            <p>[DESCRIPTION OF THE THEME]</p>
+            <Skeleton><p>[DESCRIPTION OF THE THEME]</p></Skeleton>
 
             <br />
 
