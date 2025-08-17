@@ -11,7 +11,10 @@ import styles from "../../../styles/dashboard.module.css"
 import { Skeleton } from "@heroui/skeleton";
 
 export function CompleteHabit(props: any) {
-    const { habitData, habitError, habitLoading } = getAPI("../api/habits", ["habitData", "habitError", "habitLoading"]);
+    const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().length === 1 ? (date.getMonth() + 1).toString().padStart(1, "0"): date.getMonth() + 1}-${date.getDate()}`;
+
+    const { habitData, habitError, habitLoading } = getAPI(`../api/habits?date=${formattedDate}`, ["habitData", "habitError", "habitLoading"]);
     const [habitsDone, setHabitsDone] = useState([]);
 
     function changeHabit(selection: Set<string>): void {
@@ -24,14 +27,12 @@ export function CompleteHabit(props: any) {
             adding = false;
         }
 
-        const date = new Date();
-
         fetch("../api/history/habits", {
             method: "PUT",
             body: JSON.stringify({
                 "addHistory": adding,
                 "habitId": diffrence[0],
-                "date": `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+                "date": formattedDate
             })
         }).catch(e => {
             addToast({
@@ -43,28 +44,25 @@ export function CompleteHabit(props: any) {
         setHabitsDone(newSelection);
     }
 
+    let stuffDone = false;
+    let tableRows = <></>;
+
     if (habitData) {
         const habits = habitData["habits"];
 
-        return (
+        tableRows = (
             <>
-                <Table selectionMode="multiple" className={`${styles.habitList}`} onSelectionChange={changeHabit}>
-                    <TableHeader>
-                        <TableColumn>Habit</TableColumn>
-                    </TableHeader>
-
-                    <TableBody>
-                        {habits.map((habit: any) => (
-                            <TableRow key={habit["id"].toString()} id={habit["id"]}>
-                                <TableCell>
-                                    {habit["text"]}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                {habits.map((habit: any) => (
+                    <TableRow key={habit["id"].toString()} id={habit["id"]}>
+                        <TableCell>
+                            {habit["text"]}
+                        </TableCell>
+                    </TableRow>
+                ))}
             </>
         );
+
+        stuffDone = true;
     };
 
     if (habitError) {
@@ -72,6 +70,26 @@ export function CompleteHabit(props: any) {
             title: "Failed to fetch habits"
         });
     };
+
+    function setCompeltedHabits() {
+        setHabitsDone(habitData["completed"]);
+    }
+
+    if (stuffDone) {
+        return (
+            <span onLoad={setCompeltedHabits}>
+                <Table selectionMode="multiple" className={`${styles.habitList}`} defaultSelectedKeys={habitData["completed"].join(",").split(",")} onSelectionChange={changeHabit}>
+                    <TableHeader>
+                        <TableColumn>Habit</TableColumn>
+                    </TableHeader>
+
+                    <TableBody>
+                        {tableRows}
+                    </TableBody>
+                </Table>
+            </span> 
+        )
+    }
 
     return (
         <Table selectionMode="multiple" className={`${styles.habitList}`}>

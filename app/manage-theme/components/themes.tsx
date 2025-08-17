@@ -96,11 +96,11 @@ export function Themes(props: any) {
     }
 
     let stuffDone = false;
-    const final = [];
     let tableRows = <></>;
 
     if (themeData) {
         const arr = themeData["themes"];
+        const final = [];
 
         for (let i = 0; i < arr.length; i++) {
             final.push([arr[i]["names"], arr[i]["description"], arr[i]["id"]])
