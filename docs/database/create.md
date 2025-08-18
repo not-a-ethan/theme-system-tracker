@@ -36,6 +36,7 @@ CREATE TABLE "journal" (
 CREATE TABLE "habitHistory" (
   "id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "habitHistory_id_seq"),
   "habitId" integer NOT NULL,
-  "date" date NOT NULL
+  "date" date NOT NULL,
+  "githubId" integer NOT NULL,
 );
 ```

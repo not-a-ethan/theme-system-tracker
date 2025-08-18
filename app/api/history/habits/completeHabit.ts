@@ -12,7 +12,7 @@ export async function completeHabit(githubID: number, habitId: number, date: str
         ];
     };
 
-    const query = await sql`INSERT INTO "habitHistory" ("habitId", "date") VALUES (${habitId}, ${date});`
+    const query = await sql`INSERT INTO "habitHistory" ("habitId", "date", "githubId") VALUES (${habitId}, ${date}, ${githubID});`
 
     return [
         {
