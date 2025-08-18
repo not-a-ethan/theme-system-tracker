@@ -5,13 +5,12 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 import { Accordion, AccordionItem } from "@heroui/accordion";
+import { Skeleton } from "@heroui/skeleton";
 
 import { CreateJournalEntry } from "./components/createJournal";
 import { CompleteHabit } from "./components/completeHabit";
 
 import { getAPI } from "@/helpers/getAPI";
-import { Skeleton } from "@heroui/skeleton";
-import { act } from "react";
 
 export default function DashBoard() {
     const { data: session, status } = useSession();
