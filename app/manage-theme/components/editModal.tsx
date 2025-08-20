@@ -6,8 +6,8 @@ export function EditModal(props: any) {
     const themeID = props.themeID;
 
     function editClick() {
-        const newName = document.getElementById("editName")?.value;
-        const newDescription = document.getElementById("editDescription")?.value;
+        const newName = (document.getElementById("editName") as HTMLInputElement).value;
+        const newDescription = (document.getElementById("editDescription") as HTMLInputElement).value;
 
         fetch("../api/themes", {
             method: "PUT",

@@ -32,7 +32,7 @@ export default function DashBoard() {
     };
 
     if (themeData) {
-        const activeTheme = {};
+        const activeTheme: any = {};
 
         for (let i = 0; i < themeData["themes"].length; i++) {
             if (themeData["themes"][i]["id"] == themeData["activeTheme"]) {

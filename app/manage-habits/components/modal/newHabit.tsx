@@ -5,7 +5,7 @@ import { addToast } from "@heroui/toast";
 
 export function CreateModal(props: any) {
     function createHabit() {
-        const name = document.getElementById("habitName")?.value;
+        const name = (document.getElementById("habitName") as HTMLInputElement).value;
 
         if (!name) {
             addToast({

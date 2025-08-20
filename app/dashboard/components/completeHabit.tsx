@@ -15,9 +15,9 @@ export function CompleteHabit(props: any) {
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().length === 1 ? (date.getMonth() + 1).toString().padStart(1, "0"): date.getMonth() + 1}-${date.getDate()}`;
 
     const { habitData, habitError, habitLoading } = getAPI(`../api/habits?date=${formattedDate}`, ["habitData", "habitError", "habitLoading"]);
-    const [habitsDone, setHabitsDone] = useState([]);
+    const [habitsDone, setHabitsDone] = useState<string[]>([]);
 
-    function changeHabit(selection: Set<string>): void {
+    function changeHabit(selection: any): void {
         const newSelection: string[] = Array.from(selection);
         let oldSelection: string[] = habitsDone;
 

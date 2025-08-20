@@ -14,11 +14,11 @@ export function CreateJournalEntry(props: any) {
     const now = today(getLocalTimeZone());
 
     function createEntry() {
-        const metaData = document.getElementById("metaData")?.value;
-        const fieldOne = document.getElementById("fieldOne")?.value;
-        const fieldTwo = document.getElementById("fieldTwo")?.value;
-        const fieldThree = document.getElementById("fieldThree")?.value;
-        const fieldFour = document.getElementById("fieldFour")?.value;
+        const metaData = (document.getElementById("metaData") as HTMLInputElement).value;
+        const fieldOne = (document.getElementById("fieldOne") as HTMLInputElement).value;
+        const fieldTwo = (document.getElementById("fieldTwo") as HTMLInputElement).value;
+        const fieldThree = (document.getElementById("fieldThree") as HTMLInputElement).value;
+        const fieldFour = (document.getElementById("fieldFour") as HTMLInputElement).value;
 
         fetch("../api/journal", {
             method: "POST",

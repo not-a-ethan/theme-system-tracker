@@ -7,8 +7,8 @@ export function NewThemeModal(props: any) {
     const setNewTheme = props.setNewTheme;
 
     function createTheme() {
-        const name = document.getElementById("newName")?.value;
-        const description = document.getElementById("newDesc")?.value;
+        const name = (document.getElementById("newName") as HTMLInputElement).value;
+        const description = (document.getElementById("newDesc") as HTMLInputElement).value;
 
         fetch("../api/themes", {
             method: "POST",

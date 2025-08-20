@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
 
     const results = await sql`SELECT * FROM journal WHERE journal."githubId" = ${githubID}`;
 
-    let formatted = `${dateInput.getFullYear()}-${dateInput.getMonth() + 1}-${dateInput.getDate()}`.split("-");
+    let formatted: string[] = `${dateInput.getFullYear()}-${dateInput.getMonth() + 1}-${dateInput.getDate()}`.split("-");
 
     if (formatted[1].length === 1) {
         formatted[1] = `0${formatted[1]}`;
@@ -43,8 +43,6 @@ export async function GET(req: NextRequest) {
     if (formatted[2].length === 1) {
         formatted[2] = `0${formatted[2]}`;
     };
-
-    formatted = formatted.join("-");
 
     for (let i = 0; i < results.length; i++) {
         const unixEpoch = results[i]["dateTime"];
@@ -58,8 +56,6 @@ export async function GET(req: NextRequest) {
         if (formattedDbDate[2].length === 1) {
             formattedDbDate[2] = `0${formattedDbDate[2]}`;
         };
-
-        formattedDbDate = formattedDbDate.join("-");
         
         if (formatted == formattedDbDate) {
             return NextResponse.json(

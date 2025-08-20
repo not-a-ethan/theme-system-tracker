@@ -16,7 +16,7 @@ export default function history() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
-    const [date, setDate] = useState(today(getLocalTimeZone()));
+    const [date, setDate] = useState<any>(today(getLocalTimeZone()));
 
     if (status === "loading") {
         return (
@@ -42,9 +42,7 @@ export default function history() {
             newDate[2] = `0${newDate[2]}`;
         };
 
-        newDate = newDate.join("-");
-
-        setDate(newDate);
+        setDate(newDate.join("-"));
     }
 
     return (
