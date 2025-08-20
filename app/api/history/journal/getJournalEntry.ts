@@ -19,9 +19,9 @@ export async function GET(req: NextRequest) {
     const githubID: number = Number(token.sub);
 
     const searchParams = req.nextUrl.searchParams;
-    const dataParam: number = Number(searchParams.get("date"));
+    const dataParam = searchParams.get("date");
 
-    if (!dataParam || Number.isNaN(dataParam)) {
+    if (!dataParam) {
         return NextResponse.json(
             {
                 "error": "data paramerter is not valid"
@@ -56,8 +56,8 @@ export async function GET(req: NextRequest) {
         if (formattedDbDate[2].length === 1) {
             formattedDbDate[2] = `0${formattedDbDate[2]}`;
         };
-        
-        if (formatted == formattedDbDate) {
+
+        if (formatted.join("-") == formattedDbDate.join("-")) {
             return NextResponse.json(
                 {
                     data: results[i]
