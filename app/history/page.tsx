@@ -55,6 +55,8 @@ export default function history() {
 
             <DatePicker className="max-w-[284px]" label="Date to look at" showMonthAndYearPickers defaultValue={date} onChange={updateDate} />
 
+            <br />
+            
             <HistoryDate date={date} />
         </>
     )

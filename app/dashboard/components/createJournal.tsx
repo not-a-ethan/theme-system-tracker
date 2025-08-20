@@ -5,7 +5,7 @@ import { Input } from "@heroui/input";
 import { Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 
-import {getLocalTimeZone, today} from "@internationalized/date";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 import styles from "../../../styles/dashboard.module.css"
 
@@ -33,7 +33,7 @@ export function CreateJournalEntry(props: any) {
     }
 
     return (
-        <Form className={`${styles.newEntry}`}>
+        <Form>
             <h2>Theme Journal Entry</h2>
 
             <div className={`${styles.metaDataItems}`}>
