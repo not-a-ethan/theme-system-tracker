@@ -19,7 +19,18 @@ export async function GET(req: NextRequest) {
     const githubID: number = Number(token.sub);
 
     const searchParams = req.nextUrl.searchParams;
-    const dateInput = new Date(searchParams.get("date"));
+    const dataParam: number = Number(searchParams.get("date"));
+
+    if (!dataParam || Number.isNaN(dataParam)) {
+        return NextResponse.json(
+            {
+                "error": "data paramerter is not valid"
+            },
+            { status: 400 }
+        )
+    }
+
+    const dateInput = new Date(dataParam);
 
     const results = await sql`SELECT * FROM journal WHERE journal."githubId" = ${githubID}`;
 
