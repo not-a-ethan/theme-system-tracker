@@ -10,6 +10,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 import { SessionProvider } from "next-auth/react";
 
+import Nav from "./components/nav";
+
 export interface ProvidersProps {
   children: React.ReactNode;
   themeProps?: ThemeProviderProps;
@@ -31,6 +33,8 @@ export function Providers({ children, themeProps }: ProvidersProps) {
       <NextThemesProvider {...themeProps}>
         <SessionProvider>
           <ToastProvider />
+          <Nav />
+          
           {children}
         </SessionProvider>
       </NextThemesProvider>

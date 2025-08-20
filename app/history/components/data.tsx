@@ -30,7 +30,6 @@ export function HistoryDate(props: any) {
 
         if (journalDataObj) {
             const date = new Date(journalDataObj["dateTime"] * 1000);
-            console.log(completedHabits)
 
             return (
                 <>
