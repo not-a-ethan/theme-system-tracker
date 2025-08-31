@@ -7,7 +7,6 @@ import { Link } from "@heroui/link";
 
 export default function Nav() {
     const pathname = usePathname()
-    console.log(pathname)
 
     return (
         <Navbar>

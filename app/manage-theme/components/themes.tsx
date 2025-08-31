@@ -35,8 +35,8 @@ export function Themes(props: any) {
 
                 <TableBody>             
                     <TableRow key={-1}>
-                        <TableCell><Skeleton><p></p></Skeleton></TableCell>
-                        <TableCell><Skeleton><p></p></Skeleton></TableCell>
+                        <TableCell><Skeleton><p>Some theme name</p></Skeleton></TableCell>
+                        <TableCell><Skeleton><p>Some theme description</p></Skeleton></TableCell>
                         <TableCell>
                             <Skeleton>
                                 <div className={styles.iconsDiv}>

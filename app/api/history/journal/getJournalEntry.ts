@@ -69,8 +69,8 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(
         {
-            "error": "Journal entry not found for that day"
+            data: []
         },
-        { status: 404 }
+        { status: 200 }
     );
 };
