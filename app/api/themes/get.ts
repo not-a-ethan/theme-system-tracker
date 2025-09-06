@@ -5,6 +5,14 @@ import { getToken } from "next-auth/jwt"
 import { sql } from "@/app/postgresql/server";
 import { getActiveThemeID } from "../account/themes/getActiveTheme";
 
+export async function getThemes(githubID: number) {
+    const themes = await sql`SELECT * FROM themes WHERE owner=${githubID};`;
+
+    const activeThemeId = await getActiveThemeID(githubID);
+
+    return [themes, activeThemeId]
+}
+
 export async function GET(req: NextRequest) {
     const token = await getToken({ req });
 
@@ -19,9 +27,10 @@ export async function GET(req: NextRequest) {
 
     const githubID = Number(token.sub);
 
-    const themes = await sql`SELECT * FROM themes WHERE owner=${githubID};`;
+    const res = await getThemes(githubID);
 
-    const activeThemeId = await getActiveThemeID(githubID);
+    const themes = res[0];
+    const activeThemeId = res[1];
 
     return NextResponse.json(
         {

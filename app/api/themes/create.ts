@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
 
 import { sql } from "@/app/postgresql/server";
+import { GET, getThemes } from "./get";
+import { getActiveThemeID } from "../account/themes/getActiveTheme";
+import { setActiveTheme } from "../account/themes/setActiveTheme";
 
 export async function POST(req: NextRequest) {
     const token = await getToken({ req });
@@ -41,6 +44,17 @@ export async function POST(req: NextRequest) {
     }
 
     const query = await sql`INSERT INTO themes (names, description, owner) VALUES (${name}, ${descirption}, ${githubID});`;
+
+    const activeTheme = await getActiveThemeID(githubID);
+
+    
+    if (activeTheme == null) {
+        const themes = await getThemes(githubID);
+
+        const themeId = themes[0][0].id;
+
+        await setActiveTheme(githubID, themeId);
+    }
 
     return NextResponse.json(
         { status: 200 }

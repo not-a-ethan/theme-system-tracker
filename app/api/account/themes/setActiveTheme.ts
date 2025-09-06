@@ -4,6 +4,32 @@ import { getToken } from "next-auth/jwt"
 
 import { sql } from "@/app/postgresql/server";
 
+export async function setActiveTheme(githubID: number, id: number) {
+    if (!id || id <= 0) {
+        return [
+            { 
+                "error": "You need a valid theme ID number"
+            },
+            { status: 400 }
+        ];
+    };
+
+    const ownerQuery = await sql`SELECT * FROM themes WHERE owner=${githubID} AND id=${id};`
+
+    if (ownerQuery.length == 0) {
+        return [
+            {
+                "error": "You cant delete somebody elses project"
+            },
+            { status: 403 }
+        ];
+    };
+
+    const activeQuery = await sql`UPDATE users SET active_theme_id=${id} WHERE users."githubID"=${githubID};`;
+
+    return [{}, 200]
+}
+
 export async function PUT(req: NextRequest) {
     const token = await getToken({ req });
 
@@ -21,29 +47,10 @@ export async function PUT(req: NextRequest) {
 
     const id = body["themeID"];
 
-    if (!id || id <= 0) {
-        return NextResponse.json(
-            { 
-                "error": "You need a valid theme ID number"
-            },
-            { status: 400 }
-        );
-    };
-
-    const ownerQuery = await sql`SELECT * FROM themes WHERE owner=${githubID} AND id=${id};`
-
-    if (ownerQuery.length == 0) {
-        return NextResponse.json(
-            {
-                "error": "You cant delete somebody elses project"
-            },
-            { status: 403 }
-        );
-    };
-
-    const activeQuery = await sql`UPDATE users SET active_theme_id=${id} WHERE users."githubID"=${githubID};`;
+    const res = await setActiveTheme(id, githubID);
 
     return NextResponse.json(
-        { status: 200 }
+        res[0],
+        res[1]
     );
 };
