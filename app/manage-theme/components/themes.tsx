@@ -74,6 +74,7 @@ export function Themes(props: any) {
     };
 
     function deleteOpenClick() {
+        console.log(77)
         setEdit(false);
     };
 
@@ -113,7 +114,7 @@ export function Themes(props: any) {
                     <TableCell id={theme[2]}><p id={theme[2]}>{theme[1]}</p></TableCell>
                     <TableCell id={theme[2]}>
                         <div className={styles.iconsDiv} id={theme[2]}>
-                            <Button onPressEnd={() => onOpen} onPress={() => editOpenClick} onPressStart={() => themeClick} id={theme[2]}>
+                            <Button onPressEnd={onOpen} onPress={editOpenClick} onPressStart={themeClick} id={theme[2]}>
                                 <Tooltip content="Edit theme" id={theme[2]}>
                                     <span className="text-lg text-default-400 cursor-pointer active:opacity-50" id={theme[2]}>
                                         <EditIcon />
@@ -121,7 +122,7 @@ export function Themes(props: any) {
                                 </Tooltip>
                             </Button>
                             
-                            <Button onPressEnd={() => onOpen} onPress={() => deleteOpenClick} onPressStart={() => themeClick} id={theme[2]}>
+                            <Button onPressEnd={onOpen} onPress={deleteOpenClick} onPressStart={themeClick} id={theme[2]}>
                                 <Tooltip color="danger" content="Delete theme" id={theme[2]}>
                                     <span className="text-lg text-danger cursor-pointer active:opacity-50" id={theme[2]}>
                                         <DeleteIcon />

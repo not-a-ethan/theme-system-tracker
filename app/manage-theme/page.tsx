@@ -51,7 +51,7 @@ export default function manageTheme() {
 
             <br />
 
-            <Button onPress={onOpen} onPressStart={newThemeFunc}>
+            <Button onPressEnd={onOpen} onPressStart={newThemeFunc}>
                 Add Theme
             </Button>
 
